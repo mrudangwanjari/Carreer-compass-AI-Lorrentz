@@ -1,0 +1,74 @@
+======================================================================
+  LorentzFM Evaluation Report — Milestone 4
+  CareerCompass AI Research Baseline Comparison
+======================================================================
+
+Model            : LorentzFM (Lorentz Factorization Machine)
+Best Epoch       : 16
+Val P@10 (train) : 0.9412280701754385
+Checkpoint       : C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\lorentzfm_best_model.pt
+
+Evaluation Setup
+----------------------------------------
+  Candidate pool size  : 123,849
+  Resumes evaluated    : 228
+  Top-K               : 10
+  Ground truth        : dot(resume_domain_vector, job_domain_vector) > 0
+  Evaluation time     : 48.75 s
+  Test data used in   : Milestone 4 ONLY (never during training)
+
+Results
+----------------------------------------
+  Metric          LorentzFM        SBERT        Delta
+  ------------  ----------  ----------  ----------
+  P@10               0.9377       0.8078      +0.1299
+  MRR                0.9554       0.8478      +0.1076
+  NDCG@10            0.9400       0.8857      +0.0543
+  Hit@10             0.9605       0.9680      -0.0075
+
+Per-Resume Metric Distribution
+----------------------------------------
+  P@10       mean=0.9377  std=0.2287  min=0.0000  max=1.0000
+  MRR        mean=0.9554  std=0.2018  min=0.0000  max=1.0000
+  NDCG@10    mean=0.9400  std=0.2231  min=0.0000  max=1.0000
+  Hit@10     mean=0.9605  std=0.1951  min=0.0000  max=1.0000
+
+Sample Top-10 Predictions (first 3 resumes)
+------------------------------------------------------------
+  Resume ID    Job ID              Score   Rank   Relevant
+  ------------  ------------  ----------  ------  --------
+  1            3904951428        52.1202      1          1
+  1            3904955103        52.1202      2          1
+  1            3905256250        52.1202      3          1
+  1            3904952375        51.9634      4          1
+  1            3891074321        51.9634      5          1
+  1            3906253682        51.9634      6          1
+  1            3899526213        51.9131      7          1
+  1            3895556914        51.8635      8          1
+  1            3904065774        51.8246      9          1
+  1            3902831707        51.6966     10          1
+  2            3905256250        52.0289      1          1
+  2            3904955103        52.0289      2          1
+  2            3904951428        52.0289      3          1
+  2            3904952375        51.8518      4          1
+  2            3906253682        51.8518      5          1
+  2            3891074321        51.8518      6          1
+  2            3904065774        51.8197      7          1
+  2            3899526213        51.8179      8          1
+  2            3895556914        51.7897      9          1
+  2            3894295124        51.7031     10          1
+  3            3894209225        50.2874      1          1
+  3            3902368408        50.2038      2          1
+  3            3906225949        50.1463      3          1
+  3            3886842917        50.1463      4          1
+  3            3903880398        50.1463      5          1
+  3            3905342998        50.1335      6          1
+  3            3886450092        50.0274      7          1
+  3            3902737475        49.9924      8          1
+  3            3904988780        49.9924      9          1
+  3            3886849109        49.9924     10          1
+
+======================================================================
+  NOTE: Results are actual experimental measurements.
+  They have NOT been modified or fabricated.
+======================================================================

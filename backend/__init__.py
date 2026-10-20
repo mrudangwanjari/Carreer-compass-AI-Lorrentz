@@ -1,0 +1,1 @@
+# CareerCompass AI backend package

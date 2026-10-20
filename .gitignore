@@ -1,0 +1,62 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+.venv/
+venv/
+env/
+.env.local
+
+# ── Large model / data files ──────────────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.index
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# ── Large CSVs (dataset raw files — too big for GitHub) ───────────────────────
+dataset/postings.csv
+dataset/jobs/job_skills.csv
+dataset/jobs/job_industries.csv
+dataset/jobs/salaries.csv
+dataset/jobs/benefits.csv
+dataset/companies/companies.csv
+dataset/companies/company_industries.csv
+dataset/companies/company_specialities.csv
+dataset/companies/employee_counts.csv
+
+# ── BERT experiment large data ────────────────────────────────────────────────
+BERT/
+
+# ── Node / frontend ───────────────────────────────────────────────────────────
+node_modules/
+careercompass/node_modules/
+careercompass/dist/
+careercompass/.env.local
+
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+DS/.ipynb_checkpoints/

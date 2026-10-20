@@ -1,0 +1,57 @@
+{
+  "experiment_name": "lorentzfm_job_recommendation_baseline",
+  "random_seed": 42,
+  "numpy_seed": 42,
+  "torch_seed": 42,
+  "model": {
+    "architecture": "LorentzFM",
+    "embedding_dim": 32,
+    "lorentz_dim": 33,
+    "curvature": -1.0,
+    "num_resume_fields": 5,
+    "num_job_fields": 5,
+    "total_params": 3265,
+    "trainable_params": 3265
+  },
+  "dataset": {
+    "num_resumes": 228,
+    "num_jobs": 123849,
+    "resume_feature_dim": 19,
+    "job_feature_dim": 53,
+    "train_jobs": 105744,
+    "val_jobs": 7491,
+    "val_positive_pairs": 737691,
+    "training_samples": 44808
+  },
+  "training": {
+    "epochs_configured": 50,
+    "best_epoch": 16,
+    "epochs_run": 26,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-05,
+    "optimizer": "Adam",
+    "lr_scheduler": "ReduceLROnPlateau(factor=0.5, patience=3)",
+    "loss_function": "BPR (Bayesian Personalised Ranking)",
+    "l2_lambda": 1e-05,
+    "grad_clip_norm": 1.0,
+    "early_stopping_patience": 10,
+    "early_stopping_metric": "val_loss",
+    "negative_sampling": {
+      "strategy": "random in-batch from train-split only",
+      "num_negatives": 4,
+      "pool_size": 105744,
+      "retry_limit": 20
+    }
+  },
+  "results": {
+    "best_val_P@10": 0.9412,
+    "best_epoch": 16,
+    "total_training_time_s": 186.9,
+    "best_model_path": "C:\\Users\\MRUDANG WANJARI\\Desktop\\LorrentzFM\\lorentzfm_experiment\\results\\lorentzfm_best_model.pt",
+    "history_path": "C:\\Users\\MRUDANG WANJARI\\Desktop\\LorrentzFM\\lorentzfm_experiment\\results\\training_history.csv"
+  },
+  "hardware": "cpu",
+  "test_split_used": false,
+  "note": "Test split was NOT used at any point during training or validation."
+}

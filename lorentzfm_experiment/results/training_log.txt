@@ -1,0 +1,102 @@
+2026-09-23 21:00:22 | INFO | ======================================================================
+2026-09-23 21:00:22 | INFO |   LorentzFM Training  —  Milestone 3
+2026-09-23 21:00:22 | INFO |   CareerCompass AI Research Baseline Comparison
+2026-09-23 21:00:22 | INFO | ======================================================================
+2026-09-23 21:00:22 | INFO | Random seed: 42
+2026-09-23 21:00:22 | INFO | Device: cpu
+2026-09-23 21:00:22 | INFO | Hyperparameters:
+2026-09-23 21:00:22 | INFO |   epochs=50  batch_size=256  lr=0.0010  weight_decay=1.00e-05
+2026-09-23 21:00:22 | INFO |   embed_dim=32  num_negatives=4  early_stopping_patience=10
+2026-09-23 21:00:22 | INFO |   grad_clip=1.0  seed=42
+2026-09-23 21:00:22 | INFO | 
+Loading resume feature matrix...
+2026-09-23 21:00:22 | INFO |   Resumes: (228, 19)  (0.02 s)
+2026-09-23 21:00:22 | INFO | Loading job feature matrix...
+2026-09-23 21:00:24 | INFO |   Jobs: (123849, 53)  (2.14 s)
+2026-09-23 21:00:24 | INFO | Train job indices: 105744  |  Val job indices: 7491
+2026-09-23 21:00:24 | INFO | 
+Building training pair dataset...
+2026-09-23 21:00:24 | INFO |   Training samples: 44808  (pairs × negatives)
+2026-09-23 21:00:24 | INFO |   Batches per epoch: 176
+2026-09-23 21:00:24 | INFO | Building validation evaluation sample...
+2026-09-23 21:00:24 | INFO |   Val jobs: 7491  |  Val relevance matrix: (228, 7491)  (0.10 s)
+2026-09-23 21:00:24 | INFO | 
+Model: LorentzFM  |  embed_dim=32  |  lorentz_dim=33
+2026-09-23 21:00:24 | INFO | Parameters: total=3265  trainable=3265
+2026-09-23 21:00:26 | INFO | 
+======================================================================
+2026-09-23 21:00:26 | INFO |   Starting Training
+2026-09-23 21:00:26 | INFO | ======================================================================
+2026-09-23 21:00:33 | INFO | Epoch   1/50 | train_loss=0.157266 | val_P@10=0.8961 | lr=0.001000 | epoch_time=7.2s | total_elapsed=7.2s
+2026-09-23 21:00:33 | INFO |   --> Best model saved  (val_P@10=0.8961, epoch=1)
+2026-09-23 21:00:41 | INFO | Epoch   2/50 | train_loss=0.095057 | val_P@10=0.9118 | lr=0.001000 | epoch_time=8.1s | total_elapsed=15.3s
+2026-09-23 21:00:41 | INFO |   --> Best model saved  (val_P@10=0.9118, epoch=2)
+2026-09-23 21:00:48 | INFO | Epoch   3/50 | train_loss=0.084932 | val_P@10=0.9373 | lr=0.001000 | epoch_time=7.0s | total_elapsed=22.3s
+2026-09-23 21:00:48 | INFO |   --> Best model saved  (val_P@10=0.9373, epoch=3)
+2026-09-23 21:00:56 | INFO | Epoch   4/50 | train_loss=0.081116 | val_P@10=0.9390 | lr=0.001000 | epoch_time=7.3s | total_elapsed=29.6s
+2026-09-23 21:00:56 | INFO |   --> Best model saved  (val_P@10=0.9390, epoch=4)
+2026-09-23 21:01:03 | INFO | Epoch   5/50 | train_loss=0.070799 | val_P@10=0.9399 | lr=0.001000 | epoch_time=7.2s | total_elapsed=36.9s
+2026-09-23 21:01:03 | INFO |   --> Best model saved  (val_P@10=0.9399, epoch=5)
+2026-09-23 21:01:11 | INFO | Epoch   6/50 | train_loss=0.067575 | val_P@10=0.9408 | lr=0.001000 | epoch_time=8.3s | total_elapsed=45.2s
+2026-09-23 21:01:11 | INFO |   --> Best model saved  (val_P@10=0.9408, epoch=6)
+2026-09-23 21:01:18 | INFO | Epoch   7/50 | train_loss=0.061672 | val_P@10=0.9368 | lr=0.001000 | epoch_time=7.1s | total_elapsed=52.3s
+2026-09-23 21:01:18 | INFO |   No improvement. Patience 1/10
+2026-09-23 21:01:25 | INFO | Epoch   8/50 | train_loss=0.059943 | val_P@10=0.9395 | lr=0.001000 | epoch_time=7.1s | total_elapsed=59.4s
+2026-09-23 21:01:25 | INFO |   No improvement. Patience 2/10
+2026-09-23 21:01:32 | INFO | Epoch   9/50 | train_loss=0.055110 | val_P@10=0.9373 | lr=0.001000 | epoch_time=7.0s | total_elapsed=66.4s
+2026-09-23 21:01:32 | INFO |   No improvement. Patience 3/10
+2026-09-23 21:01:40 | INFO | Epoch  10/50 | train_loss=0.056997 | val_P@10=0.9404 | lr=0.001000 | epoch_time=8.0s | total_elapsed=74.4s
+2026-09-23 21:01:40 | INFO |   No improvement. Patience 4/10
+2026-09-23 21:01:47 | INFO | Epoch  11/50 | train_loss=0.054674 | val_P@10=0.9404 | lr=0.001000 | epoch_time=7.0s | total_elapsed=81.4s
+2026-09-23 21:01:47 | INFO |   No improvement. Patience 5/10
+2026-09-23 21:01:54 | INFO | Epoch  12/50 | train_loss=0.051586 | val_P@10=0.9395 | lr=0.000500 | epoch_time=7.1s | total_elapsed=88.5s
+2026-09-23 21:01:54 | INFO |   No improvement. Patience 6/10
+2026-09-23 21:02:02 | INFO | Epoch  13/50 | train_loss=0.054439 | val_P@10=0.9386 | lr=0.000500 | epoch_time=7.3s | total_elapsed=95.7s
+2026-09-23 21:02:02 | INFO |   No improvement. Patience 7/10
+2026-09-23 21:02:09 | INFO | Epoch  14/50 | train_loss=0.054630 | val_P@10=0.9390 | lr=0.000500 | epoch_time=7.2s | total_elapsed=102.9s
+2026-09-23 21:02:09 | INFO |   No improvement. Patience 8/10
+2026-09-23 21:02:16 | INFO | Epoch  15/50 | train_loss=0.053343 | val_P@10=0.9368 | lr=0.000500 | epoch_time=7.0s | total_elapsed=109.9s
+2026-09-23 21:02:16 | INFO |   No improvement. Patience 9/10
+2026-09-23 21:02:23 | INFO | Epoch  16/50 | train_loss=0.052549 | val_P@10=0.9412 | lr=0.000500 | epoch_time=7.0s | total_elapsed=116.9s
+2026-09-23 21:02:23 | INFO |   --> Best model saved  (val_P@10=0.9412, epoch=16)
+2026-09-23 21:02:30 | INFO | Epoch  17/50 | train_loss=0.051602 | val_P@10=0.9404 | lr=0.000500 | epoch_time=7.1s | total_elapsed=124.0s
+2026-09-23 21:02:30 | INFO |   No improvement. Patience 1/10
+2026-09-23 21:02:38 | INFO | Epoch  18/50 | train_loss=0.050396 | val_P@10=0.9404 | lr=0.000500 | epoch_time=8.2s | total_elapsed=132.2s
+2026-09-23 21:02:38 | INFO |   No improvement. Patience 2/10
+2026-09-23 21:02:45 | INFO | Epoch  19/50 | train_loss=0.050760 | val_P@10=0.9386 | lr=0.000500 | epoch_time=7.0s | total_elapsed=139.2s
+2026-09-23 21:02:45 | INFO |   No improvement. Patience 3/10
+2026-09-23 21:02:52 | INFO | Epoch  20/50 | train_loss=0.050774 | val_P@10=0.9377 | lr=0.000500 | epoch_time=6.9s | total_elapsed=146.1s
+2026-09-23 21:02:52 | INFO |   No improvement. Patience 4/10
+2026-09-23 21:02:59 | INFO | Epoch  21/50 | train_loss=0.050565 | val_P@10=0.9390 | lr=0.000500 | epoch_time=6.6s | total_elapsed=152.7s
+2026-09-23 21:02:59 | INFO |   No improvement. Patience 5/10
+2026-09-23 21:03:05 | INFO | Epoch  22/50 | train_loss=0.052260 | val_P@10=0.9382 | lr=0.000250 | epoch_time=6.6s | total_elapsed=159.3s
+2026-09-23 21:03:05 | INFO |   No improvement. Patience 6/10
+2026-09-23 21:03:12 | INFO | Epoch  23/50 | train_loss=0.051568 | val_P@10=0.9399 | lr=0.000250 | epoch_time=6.9s | total_elapsed=166.2s
+2026-09-23 21:03:12 | INFO |   No improvement. Patience 7/10
+2026-09-23 21:03:19 | INFO | Epoch  24/50 | train_loss=0.049648 | val_P@10=0.9399 | lr=0.000250 | epoch_time=7.0s | total_elapsed=173.2s
+2026-09-23 21:03:19 | INFO |   No improvement. Patience 8/10
+2026-09-23 21:03:26 | INFO | Epoch  25/50 | train_loss=0.049892 | val_P@10=0.9395 | lr=0.000250 | epoch_time=6.7s | total_elapsed=179.9s
+2026-09-23 21:03:26 | INFO |   No improvement. Patience 9/10
+2026-09-23 21:03:33 | INFO | Epoch  26/50 | train_loss=0.052528 | val_P@10=0.9399 | lr=0.000250 | epoch_time=7.0s | total_elapsed=186.9s
+2026-09-23 21:03:33 | INFO |   No improvement. Patience 10/10
+2026-09-23 21:03:33 | INFO | 
+Early stopping triggered at epoch 26. Best epoch=16  best_val_loss=-0.941228
+2026-09-23 21:03:33 | INFO | 
+Training history saved: C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\training_history.csv
+2026-09-23 21:03:33 | INFO | Training config saved: C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\training_config.json
+2026-09-23 21:03:33 | INFO | 
+2026-09-23 21:03:33 | INFO | ======================================================================
+2026-09-23 21:03:33 | INFO |   TRAINING COMPLETE — MILESTONE 3 SUMMARY
+2026-09-23 21:03:33 | INFO | ======================================================================
+2026-09-23 21:03:33 | INFO |   Best epoch          : 16 / 26
+2026-09-23 21:03:33 | INFO |   Best val P@10       : 0.9412
+2026-09-23 21:03:33 | INFO |   Final train loss    : 0.052528
+2026-09-23 21:03:33 | INFO |   Total training time : 186.9 s (3.11 min)
+2026-09-23 21:03:33 | INFO |   Total parameters    : 3265
+2026-09-23 21:03:33 | INFO |   Trainable parameters: 3265
+2026-09-23 21:03:33 | INFO |   Best model saved to : C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\lorentzfm_best_model.pt
+2026-09-23 21:03:33 | INFO |   History saved to    : C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\training_history.csv
+2026-09-23 21:03:33 | INFO |   Config saved to     : C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\training_config.json
+2026-09-23 21:03:33 | INFO |   Log saved to        : C:\Users\MRUDANG WANJARI\Desktop\LorrentzFM\lorentzfm_experiment\results\training_log.txt
+2026-09-23 21:03:33 | INFO |   Test split used     : NO (preserved for Milestone 4)
+2026-09-23 21:03:33 | INFO | ======================================================================

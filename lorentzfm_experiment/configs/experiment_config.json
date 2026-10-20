@@ -1,0 +1,247 @@
+{
+  "experiment_name": "lorentzfm_job_recommendation_baseline",
+  "project_context": "CareerCompass AI Research Baseline Comparison",
+  "description": "Controlled LorentzFM baseline for resume-to-job recommendation. Evaluated against SBERT and BERT under identical data split, candidate job pool, relevance labels, and ranking metrics. This experiment is fully isolated and does NOT modify the CareerCompass AI production pipeline.",
+  "milestone": 1,
+  "random_seed": 42,
+
+  "dataset": {
+    "source": "LinkedIn Job Postings Dataset (shared across all baselines)",
+
+    "resumes": {
+      "path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/resumes_parsed.csv",
+      "num_resumes": 228,
+      "text_fields": ["summary", "tech_skills", "current_role"],
+      "structured_fields": ["years_experience", "seniority_level", "education_level", "education_score", "skill_count", "cert_count"],
+      "domain_label_path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/resume_domain_labels.csv",
+      "domain_vector_dim": 15,
+      "domain_columns": [
+        "dom_Machine_Learning___AI",
+        "dom_Data_Science___Analytics",
+        "dom_Data_Engineering",
+        "dom_Cloud___DevOps",
+        "dom_Software_Engineering",
+        "dom_Cybersecurity",
+        "dom_Business_Intelligence",
+        "dom_Project_Management",
+        "dom_Business_Analysis",
+        "dom_Finance___FinTech",
+        "dom_Healthcare___BioTech",
+        "dom_Blockchain___Web3",
+        "dom_IoT___Embedded_Systems",
+        "dom_Product_Management",
+        "dom_Sales___Marketing"
+      ],
+      "note": "Text formatted as: summary + ' ' + tech_skills + ' ' + current_role (consistent with BERT and SBERT baselines)"
+    },
+
+    "jobs": {
+      "postings_path": "C:/Users/MRUDANG WANJARI/Desktop/LorrentzFM/dataset/postings.csv",
+      "job_skills_path": "C:/Users/MRUDANG WANJARI/Desktop/LorrentzFM/dataset/jobs/job_skills.csv",
+      "job_industries_path": "C:/Users/MRUDANG WANJARI/Desktop/LorrentzFM/dataset/jobs/job_industries.csv",
+      "skills_mapping_path": "C:/Users/MRUDANG WANJARI/Desktop/LorrentzFM/dataset/mappings/skills.csv",
+      "industries_mapping_path": "C:/Users/MRUDANG WANJARI/Desktop/LorrentzFM/dataset/mappings/industries.csv",
+      "domain_label_path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/domain_labels_wide.csv",
+      "faiss_id_map_path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/faiss_id_map.json",
+      "num_jobs_total": 123849,
+      "num_unique_skill_codes": 35,
+      "domain_vector_dim": 15,
+      "available_structured_fields": [
+        "title",
+        "formatted_experience_level",
+        "formatted_work_type",
+        "remote_allowed",
+        "location"
+      ],
+      "note": "job_id is the primary key linking postings, skills, industries and domain labels"
+    },
+
+    "split": {
+      "manifest_path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/split_manifest.csv",
+      "strategy": "Identical stratified split used by BERT and SBERT baselines",
+      "split_column": "split",
+      "splits": {
+        "train": 105744,
+        "val": 7491,
+        "test": 7492,
+        "excluded": 3122,
+        "total": 123849
+      },
+      "note": "Test split is FIXED. Must NOT be used during training or hyperparameter tuning."
+    },
+
+    "training_pairs": {
+      "path": "C:/Users/MRUDANG WANJARI/Desktop/BERT/bert_experiment/data/training_pairs.csv",
+      "columns": ["resume_id", "job_id", "label", "cosine_sim"],
+      "total_pairs": 11430,
+      "positive_pairs": 11202,
+      "negative_pairs": 228,
+      "unique_resumes": 228,
+      "unique_jobs_in_pairs": 1739
+    },
+
+    "relevance_definition": {
+      "formula": "np.dot(resume_domain_vector, job_domain_vector) > 0",
+      "description": "A job is relevant to a resume if and only if the dot product of their 15-dimensional domain label vectors is greater than zero (i.e., they share at least one common domain label).",
+      "domain_vector_dim": 15,
+      "note": "This is IDENTICAL to the ground truth definition used for SBERT and BERT baselines. Must NOT be changed."
+    }
+  },
+
+  "features": {
+    "description": "Structured features to be used by LorentzFM. These are the available features confirmed present in the dataset.",
+
+    "resume_features": {
+      "domain_vector": {
+        "description": "15-dimensional binary domain label vector (primary semantic signal)",
+        "dim": 15,
+        "type": "multi-hot binary",
+        "source": "resume_domain_labels.csv"
+      },
+      "skill_count": {
+        "description": "Number of technical skills extracted from resume",
+        "dim": 1,
+        "type": "scalar",
+        "source": "resumes_parsed.csv"
+      },
+      "seniority_level": {
+        "description": "Seniority level string (Unknown/Entry level/Associate/Mid-Senior level/Director/Executive/Senior)",
+        "dim": 1,
+        "type": "categorical → ordinal encoded",
+        "source": "resumes_parsed.csv"
+      },
+      "education_score": {
+        "description": "Numeric education score (1–4)",
+        "dim": 1,
+        "type": "scalar",
+        "source": "resumes_parsed.csv"
+      },
+      "cert_count": {
+        "description": "Number of certifications",
+        "dim": 1,
+        "type": "scalar",
+        "source": "resumes_parsed.csv"
+      },
+      "total_input_dim": 19,
+      "note": "Domain vector (15) + skill_count (1) + seniority_level (1) + education_score (1) + cert_count (1) = 19 dims"
+    },
+
+    "job_features": {
+      "domain_vector": {
+        "description": "15-dimensional binary domain label vector (primary semantic signal)",
+        "dim": 15,
+        "type": "multi-hot binary",
+        "source": "domain_labels_wide.csv"
+      },
+      "skill_vector": {
+        "description": "35-dimensional multi-hot skill code vector (from job_skills.csv + skills mapping)",
+        "dim": 35,
+        "type": "multi-hot binary",
+        "source": "job_skills.csv + skills.csv"
+      },
+      "experience_level": {
+        "description": "Experience level (Entry/Associate/Mid-Senior/Director/Executive/Unknown)",
+        "dim": 1,
+        "type": "categorical → ordinal encoded",
+        "source": "split_manifest.csv (exp_level_label)"
+      },
+      "has_salary": {
+        "description": "Binary indicator: job has salary info",
+        "dim": 1,
+        "type": "binary scalar",
+        "source": "split_manifest.csv (has_salary)"
+      },
+      "domain_count": {
+        "description": "Number of domain labels assigned to this job",
+        "dim": 1,
+        "type": "scalar",
+        "source": "split_manifest.csv (domain_count)"
+      },
+      "total_input_dim": 53,
+      "note": "Domain vector (15) + skill vector (35) + experience_level (1) + has_salary (1) + domain_count (1) = 53 dims"
+    }
+  },
+
+  "model": {
+    "architecture": "LorentzFM (Lorentz / Hyperbolic Factorization Machine)",
+    "description": "Each structured feature field is embedded separately into Lorentz (hyperbolic) space. Feature interactions are computed on the hyperboloid manifold using the Lorentz inner product. Final score is a compatibility scalar for ranking.",
+    "embedding_dim": 32,
+    "lorentz_curvature": -1.0,
+    "num_resume_feature_fields": 5,
+    "num_job_feature_fields": 5,
+    "total_feature_fields": 10,
+    "interaction": "Lorentz inner product sum over all cross-field feature pairs",
+    "scoring": "Sum of Lorentz inner products → scalar compatibility score",
+    "normalization": "All embeddings projected onto Lorentz hyperboloid after initialization",
+    "note": "No SBERT embeddings. No CareerCompass multi-task heads. Pure structured-feature LorentzFM baseline."
+  },
+
+  "training": {
+    "loss_function": "BPR (Bayesian Personalised Ranking) pairwise loss",
+    "negative_sampling": {
+      "strategy": "random in-batch negatives from training job pool (train split only)",
+      "num_negatives_per_positive": 4,
+      "sampling_from": "train split jobs only (NOT val or test)"
+    },
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 1e-5,
+    "batch_size": 256,
+    "num_epochs": 50,
+    "early_stopping_patience": 5,
+    "early_stopping_metric": "val_loss",
+    "warmup_epochs": 2,
+    "gradient_clip_norm": 1.0,
+    "hardware": "CPU",
+    "random_seed": 42,
+    "use_train_split_only": true,
+    "note": "Validation set used ONLY for early stopping / model selection. Test set is NEVER touched during training."
+  },
+
+  "evaluation": {
+    "protocol": "Identical to SBERT and BERT baselines",
+    "test_set": "test split from split_manifest.csv (7492 jobs)",
+    "candidate_pool": "All 123849 jobs in postings.csv (same as SBERT/BERT)",
+    "candidate_pool_size": 123849,
+    "top_k": 10,
+    "similarity_metric": "LorentzFM compatibility score (higher = more relevant)",
+    "ground_truth": "np.dot(resume_domain_vector, job_domain_vector) > 0",
+    "ranking_metrics": ["Precision@10", "MRR", "NDCG@10", "Hit@10"],
+    "output_paths": {
+      "metrics": "lorentzfm_experiment/results/lorentzfm_metrics.json",
+      "predictions": "lorentzfm_experiment/results/lorentzfm_predictions.csv",
+      "report": "lorentzfm_experiment/results/lorentzfm_evaluation_report.txt"
+    },
+    "sbert_reference_results": {
+      "model": "all-MiniLM-L6-v2 (SBERT)",
+      "P@10": 0.8078,
+      "MRR": 0.8478,
+      "NDCG@10": 0.8857,
+      "Hit@10": 0.9680,
+      "note": "Reference only. Do NOT modify."
+    }
+  },
+
+  "output_paths": {
+    "best_model_checkpoint": "lorentzfm_experiment/models/lorentzfm_best_model.pt",
+    "training_history": "lorentzfm_experiment/results/training_history.csv",
+    "training_config": "lorentzfm_experiment/results/training_config.json",
+    "training_log": "lorentzfm_experiment/results/training_log.txt",
+    "metrics": "lorentzfm_experiment/results/lorentzfm_metrics.json",
+    "predictions": "lorentzfm_experiment/results/lorentzfm_predictions.csv",
+    "evaluation_report": "lorentzfm_experiment/results/lorentzfm_evaluation_report.txt",
+    "comparison_csv": "lorentzfm_experiment/results/comparison.csv",
+    "comparison_report": "lorentzfm_experiment/results/comparison_report.txt",
+    "comparison_plot": "lorentzfm_experiment/results/comparison_plot.png"
+  },
+
+  "isolation_note": "LorentzFM code is fully isolated inside lorentzfm_experiment/. It does NOT modify SBERT, BERT, or the CareerCompass AI production model in any way.",
+
+  "reproducibility": {
+    "random_seed": 42,
+    "numpy_seed": 42,
+    "torch_seed": 42,
+    "python_hash_seed": "PYTHONHASHSEED=42 (set at runtime)",
+    "torch_deterministic": true
+  }
+}

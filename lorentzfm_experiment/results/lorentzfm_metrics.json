@@ -1,0 +1,34 @@
+{
+  "model": "LorentzFM",
+  "experiment": "CareerCompass AI Research Baseline Comparison",
+  "checkpoint": "C:\\Users\\MRUDANG WANJARI\\Desktop\\LorrentzFM\\lorentzfm_experiment\\results\\lorentzfm_best_model.pt",
+  "best_epoch": 16,
+  "val_P@10_at_best_epoch": 0.9412280701754385,
+  "evaluation": {
+    "candidate_pool_size": 123849,
+    "num_resumes_evaluated": 228,
+    "top_k": 10,
+    "ground_truth": "dot(resume_domain_vector, job_domain_vector) > 0",
+    "evaluation_time_s": 48.75
+  },
+  "results": {
+    "P@10": 0.9377,
+    "MRR": 0.9554,
+    "NDCG@10": 0.94,
+    "Hit@10": 0.9605
+  },
+  "sbert_reference": {
+    "P@10": 0.8078,
+    "MRR": 0.8478,
+    "NDCG@10": 0.8857,
+    "Hit@10": 0.968
+  },
+  "delta_vs_sbert": {
+    "P@10": 0.1299,
+    "MRR": 0.1076,
+    "NDCG@10": 0.0543,
+    "Hit@10": -0.0075
+  },
+  "test_split_used_during_training": false,
+  "note": "Test split was used HERE for the first time (Milestone 4 evaluation only)."
+}
